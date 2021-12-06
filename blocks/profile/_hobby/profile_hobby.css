@@ -4,3 +4,10 @@
     line-height: 22px;
     margin: 16px 0 0 0;
 }
+
+@media screen and (max-width: 700px) {
+    .profile_hobby {
+        font-size: 14px;
+        line-height: 17px;
+    }
+}
