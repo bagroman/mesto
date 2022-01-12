@@ -3,11 +3,27 @@
     font-size: 18px;
     line-height: 22px;
     margin: 16px 0 0 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 500px;
+}
+
+@media screen and (max-width: 900px) {
+    .profile__hobby {
+        max-width: 300px;
+    }
 }
 
 @media screen and (max-width: 700px) {
     .profile__hobby {
         font-size: 14px;
         line-height: 17px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .profile__hobby {
+        max-width: 250px;
     }
 }

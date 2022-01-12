@@ -16,3 +16,10 @@
         line-height: 17px;
     }
 }
+
+@media screen and (max-width: 500px) {
+    .footer {
+        padding-bottom: 36px;
+        margin-top: 48px;
+    }
+}
