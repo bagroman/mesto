@@ -19,71 +19,85 @@
                     <img src="images/avatar.png" alt="Аватар" class="profile__avatar">
                     <div class="profile__name">
                         <div class="profile__edit-info">
-                            <h1 class="profile__username">Жак-Ив Кусто</h1>
-                            <button class="profile__edit">
-                                <img src="images/edit.png" alt="Редактировать" class="profile__edit-button">
+                            <h1 class="profile__user-name">Жак-Ив Кусто</h1>
+                            <button class="profile__edit" type="button">
+                                <img src="images/edit.svg" alt="Кнопка редактировать" class="profile__edit-button">
                             </button>
                         </div>
                         <h2 class="profile__hobby">Исследователь океана</h2>
                     </div>
                 </div>
-                <button class="profile__add"></button>
+                <button class="profile__add" type="button"></button>
             </section>
             <section class="elements">
                 <div class="element">
                     <img src="images/karachaevsk.png" alt="Карачаевск" class="element__photo">
                     <div class="element__info">
                         <h3 class="element__object-name">Карачаевск</h3>
-                        <img src="images/like.png" alt="" class="element__like">
+                        <button class="element__like-button" type="button">
+                            <img src="images/like.svg" alt="Кнопка лайк" class="element__like">
+                        </button>
                     </div>
                 </div>
                 <div class="element">
                     <img src="images/elbrus.png" alt="Гора Эльбрус" class="element__photo">
                     <div class="element__info">
                         <h3 class="element__object-name">Гора Эльбрус</h3>
-                        <img src="images/like.png" alt="" class="element__like">
+                        <button class="element__like-button" type="button">
+                            <img src="images/like.svg" alt="Кнопка лайк" class="element__like">
+                        </button>
                     </div>
                 </div>
                 <div class="element">
                     <img src="images/dombai.png" alt="Домбай" class="element__photo">
                     <div class="element__info">
                         <h3 class="element__object-name">Домбай</h3>
-                        <img src="images/like.png" alt="" class="element__like">
+                        <button class="element__like-button" type="button">
+                            <img src="images/like.svg" alt="Кнопка лайк" class="element__like">
+                        </button>
                     </div>
                 </div>
                 <div class="element">
                     <img src="images/elbrus.png" alt="Гора Эльбрус" class="element__photo">
                     <div class="element__info">
                         <h3 class="element__object-name">Гора Эльбрус</h3>
-                        <img src="images/like.png" alt="" class="element__like">
+                        <button class="element__like-button" type="button">
+                            <img src="images/like.svg" alt="Кнопка лайк" class="element__like">
+                        </button>
                     </div>
                 </div>
                 <div class="element">
                     <img src="images/dombai.png" alt="Домбай" class="element__photo">
                     <div class="element__info">
                         <h3 class="element__object-name">Домбай</h3>
-                        <img src="images/like.png" alt="" class="element__like">
+                        <button class="element__like-button" type="button">
+                            <img src="images/like.svg" alt="Кнопка лайк" class="element__like">
+                        </button>
                     </div>
                 </div>
                 <div class="element">
                     <img src="images/karachaevsk.png" alt="Карачаевск" class="element__photo">
                     <div class="element__info">
                         <h3 class="element__object-name">Карачаевск</h3>
-                        <img src="images/like.png" alt="" class="element__like">
+                        <button class="element__like-button" type="button">
+                            <img src="images/like.svg" alt="Кнопка лайк" class="element__like">
+                        </button>
                     </div>
                 </div>
             </section>
             <div class="popup">
                 <div class="popup__container">
-                    <form class="popup__form">
+                    <form class="popup__form" name="edit-form">
                         <h3 class="popup__header">Редактировать профиль</h3>
-                        <input type="text" class="popup__name">
-                        <input type="text" class="popup__hobby">
-                        <button class="popup__button">Сохранить</button>
+                        <div class="popup__fields">
+                            <input type="text" class="popup__field" name="name" id="popup-name-field">
+                            <input type="text" class="popup__field" name="hobby" id="popup-hobby-field">    
+                        </div>
+                        <button class="popup__button" type="submit">Сохранить</button>
                     </form>
-                    <div class="popup__close-button">
-                        <img src="images/close.png" alt="Крестик" class="popup__close-img">
-                    </div>
+                    <button class="popup__close-button" type="button">
+                        <img src="images/close.svg" alt="Крестик" class="popup__close-img">
+                    </button>
                 </div>
             </div>
         </main>

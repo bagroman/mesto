@@ -1,8 +1,6 @@
-.popup__form {
+.popup__fields {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    text-align: left;
-    row-gap: 50px;
-    width: 100%;
+    row-gap: 30px;
 }

@@ -1,4 +1,4 @@
-.popup__name {
+.popup__field {
     margin: 0;
     font-weight: normal;
     font-size: 14px;
@@ -8,11 +8,4 @@
     border-left: 0;
     border-right: 0;
     padding: 0;
-}
-
-@media screen and (max-width: 550px) {
-    .popup__name {
-        font-size: 14px;
-        line-height: 17px;
-    }
 }

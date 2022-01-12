@@ -2,22 +2,22 @@ let popup = document.querySelector('.popup');
 let editPopupButton = document.querySelector('.profile__edit-button');
 let closePopupButton = document.querySelector('.popup__close-button');
 
-let profileName = document.querySelector('.profile__username');
+let profileName = document.querySelector('.profile__user-name');
 let profileHobby = document.querySelector('.profile__hobby');
 
-let popupName = document.querySelector('.popup__name');
-let popupHobby = document.querySelector('.popup__hobby');
+let popupName = document.querySelector('#popup-name-field');
+let popupHobby = document.querySelector('#popup-hobby-field');
 
 let formElement = document.querySelector('.popup__form');
 
 function showPopup() {
-    popup.classList.add('popup__open');
+    popup.classList.add('popup_opened');
     popupName.value = profileName.textContent;
     popupHobby.value = profileHobby.textContent;
 }
 
 function closePopup() {
-    popup.classList.remove('popup__open');
+    popup.classList.remove('popup_opened');
 }
 
 function formSubmitHandler (evt) {

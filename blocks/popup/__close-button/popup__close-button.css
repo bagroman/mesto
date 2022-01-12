@@ -3,10 +3,13 @@
     left: calc(100% + 8px);
     bottom: calc(100% + 8px);
     transition: opacity 0.3s;
+    border: 0;
+    padding: 0;
+    background: transparent;
 }
 
 .popup__close-button:hover {
-    opacity: 0.8;
+    opacity: 0.6;
     cursor: pointer;
 }
 
