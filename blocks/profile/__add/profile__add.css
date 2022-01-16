@@ -1,14 +1,10 @@
 .profile__add {
     border: 0;
     padding: 0;
-    width: 150px;
-    height: 50px;
     background: transparent;
     align-self: center;
-    background-image: url("../../../images/add.svg");
-    background-repeat: no-repeat;
+    width: 150px;
     transition: opacity 0.3s;
-    border-radius: 2px;
 }
 
 .profile__add:hover {
@@ -20,6 +16,5 @@
     .profile__add {
         margin-top: 36px;
         width: 282px;
-        background-image: url("../../../images/add2.svg");
     }
 }
