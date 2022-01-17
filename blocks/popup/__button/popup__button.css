@@ -9,6 +9,7 @@
     height: 50px;
     transition: opacity 0.3s;
     border-radius: 2px;
+    margin-top: 13px;
 }
 
 .popup__button:hover {
