@@ -1,9 +1,11 @@
 const popup = document.querySelector('.popup');
+const zoom = document.querySelector('.zoom');
 const popupHeader = document.querySelector('.popup__header');
 
 const editPopupButton = document.querySelector('.profile__edit-icon');
 const addPopupButton = document.querySelector('.profile__add');
 const closePopupButton = document.querySelector('.popup__close-button');
+const closeZoom = document.querySelector('.zoom__close-button');
 
 const profileName = document.querySelector('.profile__user-name');
 const profileHobby = document.querySelector('.profile__hobby');
@@ -51,6 +53,7 @@ function appendElement(item) {
   element.querySelector('.element__object-name').textContent = item.name;
   element.querySelector('.element__like-button').addEventListener('click', evt => {evt.target.classList.toggle('element__like-button_active')});
   element.querySelector('.element__trash-icon').addEventListener('click', evt => {evt.target.parentNode.remove()});
+  element.querySelector('.element__photo').addEventListener('click', showPopup)
   elements.prepend(element);
 }
 
@@ -59,23 +62,31 @@ function fillElements(item) {
 }
 
 function showPopup(evt) {
-  popup.classList.add('popup_opened');
   if (evt.target == editPopupButton) {
+    popup.classList.add('popup_opened');
     popupHeader.textContent = 'Редактировать профиль';
     popup.querySelector('#popup-name-field').value = profileName.textContent;
     popup.querySelector('#popup-hobby-or-link-field').value = profileHobby.textContent;
   }
   else if (evt.target == addPopupButton) {
+    popup.classList.add('popup_opened');
     popupHeader.textContent = 'Новое место';
     popup.querySelector('#popup-name-field').value = "";
     popup.querySelector('#popup-hobby-or-link-field').value = "";
     popup.querySelector('#popup-name-field').placeholder = 'Название';
     popup.querySelector('#popup-hobby-or-link-field').placeholder = 'Ссылка на картинку';
   }
+  else {
+    zoom.classList.add('zoom_opened');
+    zoom.querySelector('.zoom__img').src = evt.target.src;
+    zoom.querySelector('.zoom__img').alt = evt.target.closest('.element').querySelector('.element__object-name').textContent;;
+    zoom.querySelector('.zoom__caption').textContent = evt.target.closest('.element').querySelector('.element__object-name').textContent;
+  }
 }
 
 function closePopup() {
   popup.classList.remove('popup_opened');
+  zoom.classList.remove('zoom_opened');
 }
 
 function formSubmitHandler (evt) {
@@ -97,5 +108,6 @@ function formSubmitHandler (evt) {
 editPopupButton.addEventListener('click', showPopup);
 addPopupButton.addEventListener('click', showPopup);
 closePopupButton.addEventListener('click', closePopup);
+closeZoom.addEventListener('click', closePopup);
 formElement.addEventListener('submit', formSubmitHandler);
 fillElements(initialCards);
