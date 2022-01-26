@@ -2,4 +2,14 @@
     border: 0;
     padding: 0;
     background: transparent;
+    background-image: url(../../../images/like.svg);
+    width: 22px;
+    height: 19px;
+    background-color: transparent;
+    transition: opacity 0.3s;
+}
+
+.element__like-button:hover {
+    opacity: 0.5;
+    cursor: pointer;
 }
