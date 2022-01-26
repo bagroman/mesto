@@ -1,16 +1,20 @@
-let popup = document.querySelector('.popup');
-let editPopupButton = document.querySelector('.profile__edit-icon');
-let closePopupButton = document.querySelector('.popup__close-button');
+const popup = document.querySelector('.popup');
+const popupHeader = document.querySelector('.popup__header');
 
-let profileName = document.querySelector('.profile__user-name');
-let profileHobby = document.querySelector('.profile__hobby');
+const editPopupButton = document.querySelector('.profile__edit-icon');
+const addPopupButton = document.querySelector('.profile__add');
+const closePopupButton = document.querySelector('.popup__close-button');
 
-let popupName = document.querySelector('#popup-name-field');
-let popupHobby = document.querySelector('#popup-hobby-field');
+const profileName = document.querySelector('.profile__user-name');
+const profileHobby = document.querySelector('.profile__hobby');
 
-let formElement = document.querySelector('.popup__form');
+const popupName = document.querySelector('#popup-name-field');
+const popupHobby = document.querySelector('#popup-hobby-or-link-field');
 
-let elements = document.querySelector('.elements');
+const formElement = document.querySelector('.popup__form');
+
+const content = document.querySelector('.content');
+const elements = document.querySelector('.elements');
 
 const initialCards = [
     {
@@ -39,35 +43,57 @@ const initialCards = [
     }
   ];
 
-function fillElements() {
-    const elementTemplate = document.querySelector('#element-template').content;
-    initialCards.forEach(function(item){
-        const element = elementTemplate.querySelector('.element').cloneNode(true);
-        element.querySelector('.element__photo').src = item.link;
-        element.querySelector('.element__photo').alt = item.name;
-        element.querySelector('.element__object-name').textContent = item.name;
-        elements.append(element);
-    })
+function appendElement(item) {
+  const elementTemplate = document.querySelector('#element-template').content;
+  const element = elementTemplate.querySelector('.element').cloneNode(true);
+  element.querySelector('.element__photo').src = item.link;
+  element.querySelector('.element__photo').alt = item.name;
+  element.querySelector('.element__object-name').textContent = item.name;
+  elements.prepend(element);
 }
 
-function showPopup() {
-    popup.classList.add('popup_opened');
-    popupName.value = profileName.textContent;
-    popupHobby.value = profileHobby.textContent;
+function fillElements(item) {
+  item.forEach(appendElement);
+}
+
+function showPopup(evt) {
+  popup.classList.add('popup_opened');
+  if (evt.target == editPopupButton) {
+    popupHeader.textContent = 'Редактировать профиль';
+    popup.querySelector('#popup-name-field').value = profileName.textContent;
+    popup.querySelector('#popup-hobby-or-link-field').value = profileHobby.textContent;
+  }
+  else if (evt.target == addPopupButton) {
+    popupHeader.textContent = 'Новое место';
+    popup.querySelector('#popup-name-field').value = "";
+    popup.querySelector('#popup-hobby-or-link-field').value = "";
+    popup.querySelector('#popup-name-field').placeholder = 'Название';
+    popup.querySelector('#popup-hobby-or-link-field').placeholder = 'Ссылка на картинку';
+  }
 }
 
 function closePopup() {
-    popup.classList.remove('popup_opened');
+  popup.classList.remove('popup_opened');
 }
 
 function formSubmitHandler (evt) {
-    evt.preventDefault();
+  evt.preventDefault();
+  if (popupHeader.textContent == 'Редактировать профиль') {
     profileName.textContent = popupName.value;
     profileHobby.textContent = popupHobby.value;
-    closePopup();
+  }
+  else if (popupHeader.textContent == 'Новое место') {
+    const element = {
+      name: popupName.value,
+      link: popupHobby.value
+    };
+    appendElement(element);
+  }
+  closePopup();
 }
 
 editPopupButton.addEventListener('click', showPopup);
+addPopupButton.addEventListener('click', showPopup);
 closePopupButton.addEventListener('click', closePopup);
 formElement.addEventListener('submit', formSubmitHandler);
-fillElements();
+fillElements(initialCards);
