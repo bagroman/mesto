@@ -50,6 +50,7 @@ function appendElement(item) {
   element.querySelector('.element__photo').alt = item.name;
   element.querySelector('.element__object-name').textContent = item.name;
   element.querySelector('.element__like-button').addEventListener('click', evt => {evt.target.classList.toggle('element__like-button_active')});
+  element.querySelector('.element__trash-icon').addEventListener('click', evt => {evt.target.parentNode.remove()});
   elements.prepend(element);
 }
 
