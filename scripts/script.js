@@ -1,21 +1,24 @@
-const popup = document.querySelector('.popup');
+const editPopup = document.querySelector('.edit-popup');
+const addPopup = document.querySelector('.add-popup');
 const zoom = document.querySelector('.zoom');
-const popupHeader = document.querySelector('.popup__header');
 
-const editPopupButton = document.querySelector('.profile__edit-icon');
+const editPopupButton = document.querySelector('.profile__edit');
 const addPopupButton = document.querySelector('.profile__add');
-const closePopupButton = document.querySelector('.popup__close-button');
-const closeZoom = document.querySelector('.zoom__close-button');
+const closeEditPopupButton = document.querySelector('.close_edit');
+const closeAddPopupButton = document.querySelector('.close_add');
+const closeZoom = document.querySelector('.close_zoom');
 
 const profileName = document.querySelector('.profile__user-name');
 const profileHobby = document.querySelector('.profile__hobby');
 
 const popupName = document.querySelector('#popup-name-field');
-const popupHobby = document.querySelector('#popup-hobby-or-link-field');
+const popupHobby = document.querySelector('#popup-hobby-field');
+const popupPlace = document.querySelector('#popup-place-field');
+const popupLink = document.querySelector('#popup-link-field');
 
-const formElement = document.querySelector('.popup__form');
+const editForm = document.querySelector('#edit-popup-form');
+const addForm = document.querySelector('#add-popup-form');
 
-const content = document.querySelector('.content');
 const elements = document.querySelector('.elements');
 
 const initialCards = [
@@ -45,69 +48,70 @@ const initialCards = [
     }
   ];
 
-function appendElement(item) {
+function createCard(name, link) {
   const elementTemplate = document.querySelector('#element-template').content;
   const element = elementTemplate.querySelector('.element').cloneNode(true);
-  element.querySelector('.element__photo').src = item.link;
-  element.querySelector('.element__photo').alt = item.name;
-  element.querySelector('.element__object-name').textContent = item.name;
+  element.querySelector('.element__photo').src = link;
+  element.querySelector('.element__photo').alt = name;
+  element.querySelector('.element__object-name').textContent = name;
   element.querySelector('.element__like-button').addEventListener('click', evt => {evt.target.classList.toggle('element__like-button_active')});
   element.querySelector('.element__trash-icon').addEventListener('click', evt => {evt.target.parentNode.remove()});
-  element.querySelector('.element__photo').addEventListener('click', showPopup)
-  elements.prepend(element);
+  element.querySelector('.element__photo').addEventListener('click', fillZoomPopup);
+  element.querySelector('.element__photo').addEventListener('click', function(){showPopup(zoom)});
+  return element;
 }
 
-function fillElements(item) {
-  item.forEach(appendElement);
+function addCard(container, cardElement) {
+  container.prepend(cardElement);
 }
 
-function showPopup(evt) {
-  if (evt.target == editPopupButton) {
-    popup.classList.add('popup_opened');
-    popupHeader.textContent = 'Редактировать профиль';
-    popup.querySelector('#popup-name-field').value = profileName.textContent;
-    popup.querySelector('#popup-hobby-or-link-field').value = profileHobby.textContent;
-  }
-  else if (evt.target == addPopupButton) {
-    popup.classList.add('popup_opened');
-    popupHeader.textContent = 'Новое место';
-    popup.querySelector('#popup-name-field').value = "";
-    popup.querySelector('#popup-hobby-or-link-field').value = "";
-    popup.querySelector('#popup-name-field').placeholder = 'Название';
-    popup.querySelector('#popup-hobby-or-link-field').placeholder = 'Ссылка на картинку';
-  }
-  else {
-    zoom.classList.add('zoom_opened');
-    zoom.querySelector('.zoom__img').src = evt.target.src;
-    zoom.querySelector('.zoom__img').alt = evt.target.closest('.element').querySelector('.element__object-name').textContent;;
-    zoom.querySelector('.zoom__caption').textContent = evt.target.closest('.element').querySelector('.element__object-name').textContent;
-  }
+function fillEditPopup() {
+  popupName.value = profileName.textContent;
+  popupHobby.value = profileHobby.textContent;
 }
 
-function closePopup() {
+function fillAddPopup() {
+  popupPlace.value = "";
+  popupLink.value = "";
+}
+
+function fillZoomPopup(evt) {
+  zoom.querySelector('.zoom__img').src = evt.target.src;
+  zoom.querySelector('.zoom__img').alt = evt.target.closest('.element').querySelector('.element__object-name').textContent;
+  zoom.querySelector('.zoom__caption').textContent = evt.target.closest('.element').querySelector('.element__object-name').textContent;
+}
+
+function showPopup(popup) {
+  popup.classList.add('popup_opened');
+}
+
+function closePopup(popup) {
   popup.classList.remove('popup_opened');
-  zoom.classList.remove('zoom_opened');
 }
 
-function formSubmitHandler (evt) {
+function editFormSubmit(evt) {
+  profileName.textContent = popupName.value;
+  profileHobby.textContent = popupHobby.value;
+  closePopup(editPopup);
   evt.preventDefault();
-  if (popupHeader.textContent == 'Редактировать профиль') {
-    profileName.textContent = popupName.value;
-    profileHobby.textContent = popupHobby.value;
-  }
-  else if (popupHeader.textContent == 'Новое место') {
-    const element = {
-      name: popupName.value,
-      link: popupHobby.value
-    };
-    appendElement(element);
-  }
-  closePopup();
 }
 
-editPopupButton.addEventListener('click', showPopup);
-addPopupButton.addEventListener('click', showPopup);
-closePopupButton.addEventListener('click', closePopup);
-closeZoom.addEventListener('click', closePopup);
-formElement.addEventListener('submit', formSubmitHandler);
-fillElements(initialCards);
+function addFormSubmit(evt) {
+  addCard(elements, createCard(popupPlace.value, popupLink.value));
+  closePopup(addPopup);
+  evt.preventDefault();
+}
+
+editPopupButton.addEventListener('click', function(){showPopup(editPopup)});
+editPopupButton.addEventListener('click', fillEditPopup);
+closeEditPopupButton.addEventListener('click', function(){closePopup(editPopup)});
+editForm.addEventListener('submit', editFormSubmit);
+
+addPopupButton.addEventListener('click', function(){showPopup(addPopup)});
+addPopupButton.addEventListener('click', fillAddPopup);
+closeAddPopupButton.addEventListener('click', function(){closePopup(addPopup)});
+addForm.addEventListener('submit', addFormSubmit);
+
+closeZoom.addEventListener('click', function(){closePopup(zoom)});
+
+initialCards.forEach(card => {addCard(elements, createCard(card.name, card.link))});

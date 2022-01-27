@@ -30,15 +30,28 @@
                 </button>
             </section>
             <section class="elements"></section>
-            <div class="popup">
+            <div class="popup edit-popup">
                 <div class="popup__container">
-                    <h3 class="popup__header"></h3>
-                    <form class="popup__form" name="edit-form">
+                    <h3 class="popup__header">Редактировать профиль</h3>
+                    <form class="popup__form" name="edit-form" id="edit-popup-form">
                         <input type="text" class="popup__field" name="name" id="popup-name-field">
-                        <input type="text" class="popup__field" name="hobby_or_link" id="popup-hobby-or-link-field">
+                        <input type="text" class="popup__field" name="hobby" id="popup-hobby-field">
                         <button class="popup__button" type="submit">Сохранить</button>
                     </form>
-                    <button class="popup__close-button" type="button">
+                    <button class="popup__close-button close_edit" type="button">
+                        <img src="images/close.svg" alt="Крестик" class="popup__close-img">
+                    </button>
+                </div>
+            </div>
+            <div class="popup add-popup">
+                <div class="popup__container">
+                    <h3 class="popup__header">Новое место</h3>
+                    <form class="popup__form" name="add-form" id="add-popup-form">
+                        <input type="text" class="popup__field" name="name" id="popup-place-field" placeholder="Название">
+                        <input type="text" class="popup__field" name="link" id="popup-link-field" placeholder="Ссылка на картинку">
+                        <button class="popup__button" type="submit">Сохранить</button>
+                    </form>
+                    <button class="popup__close-button close_add" type="button">
                         <img src="images/close.svg" alt="Крестик" class="popup__close-img">
                     </button>
                 </div>
@@ -47,7 +60,7 @@
                 <div class="zoom__container">
                     <img src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg" alt="Иваново" class="zoom__img">
                     <h3 class="zoom__caption"></h3>
-                    <button class="zoom__close-button" type="button">
+                    <button class="zoom__close-button close_zoom" type="button">
                         <img src="images/close.svg" alt="Крестик" class="zoom__close-img">
                     </button>
                 </div>
