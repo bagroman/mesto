@@ -4,9 +4,9 @@ const zoom = document.querySelector('.zoom');
 
 const editPopupButton = document.querySelector('.profile__edit');
 const addPopupButton = document.querySelector('.profile__add');
-const closeEditPopupButton = document.querySelector('.close_edit');
-const closeAddPopupButton = document.querySelector('.close_add');
-const closeZoom = document.querySelector('.close_zoom');
+const closeEditPopupButton = document.querySelector('.close-edit');
+const closeAddPopupButton = document.querySelector('.close-add');
+const closeZoom = document.querySelector('.close-zoom');
 
 const profileName = document.querySelector('.profile__user-name');
 const profileHobby = document.querySelector('.profile__hobby');
