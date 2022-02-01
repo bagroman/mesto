@@ -48,9 +48,11 @@
             <div class="popup add-popup">
                 <div class="popup__container">
                     <h3 class="popup__header">Новое место</h3>
-                    <form class="popup__form" name="add-form" id="add-popup-form">
-                        <input type="text" class="popup__field" name="name" id="popup-place-field" placeholder="Название">
-                        <input type="text" class="popup__field" name="link" id="popup-link-field" placeholder="Ссылка на картинку">
+                    <form class="popup__form" name="add-form" id="add-popup-form" novalidate>
+                        <input type="text" class="popup__field" name="name" id="popup-place-field" placeholder="Название" minlength="2" maxlength="30" required>
+                        <span class="popup__field-error popup-place-field-error"></span>
+                        <input type="url" class="popup__field" name="link" id="popup-link-field" placeholder="Ссылка на картинку" required>
+                        <span class="popup__field-error popup-link-field-error"></span>
                         <button class="popup__button" type="submit">Сохранить</button>
                     </form>
                     <button class="popup__close-button close-add" type="button">

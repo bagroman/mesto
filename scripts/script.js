@@ -166,12 +166,17 @@ const editPopupOpen = () => {
   enableValidation();
 }
 
+const addPopupOpen = () => {
+  showPopup(addPopup);
+  fillEditPopup();
+  enableValidation();
+}
+
 editPopupButton.addEventListener('click', editPopupOpen);
 closeEditPopupButton.addEventListener('click', function(){closePopup(editPopup)});
 editForm.addEventListener('submit', editFormSubmit);
 
-addPopupButton.addEventListener('click', function(){showPopup(addPopup)});
-addPopupButton.addEventListener('click', fillAddPopup);
+addPopupButton.addEventListener('click', addPopupOpen);
 closeAddPopupButton.addEventListener('click', function(){closePopup(addPopup)});
 addForm.addEventListener('submit', addFormSubmit);
 
