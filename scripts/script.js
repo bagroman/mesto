@@ -48,7 +48,7 @@ const initialCards = [
     }
   ];
 
-function createCard(name, link) {
+const createCard = (name, link) => {
   const elementTemplate = document.querySelector('#element-template').content;
   const element = elementTemplate.querySelector('.element').cloneNode(true);
   element.querySelector('.element__photo').src = link;
@@ -61,49 +61,112 @@ function createCard(name, link) {
   return element;
 }
 
-function addCard(container, cardElement) {
-  container.prepend(cardElement);
-}
+const addCard = (container, cardElement) => container.prepend(cardElement);
 
-function fillEditPopup() {
+const fillEditPopup = () => {
   popupName.value = profileName.textContent;
   popupHobby.value = profileHobby.textContent;
 }
 
-function fillAddPopup() {
+const fillAddPopup = () => {
   popupPlace.value = "";
   popupLink.value = "";
 }
 
-function fillZoomPopup(evt) {
+const fillZoomPopup = evt => {
   zoom.querySelector('.zoom__img').src = evt.target.src;
   zoom.querySelector('.zoom__img').alt = evt.target.closest('.element').querySelector('.element__object-name').textContent;
   zoom.querySelector('.zoom__caption').textContent = evt.target.closest('.element').querySelector('.element__object-name').textContent;
 }
 
-function showPopup(popup) {
-  popup.classList.add('popup_opened');
-}
+const showPopup = popup => popup.classList.add('popup_opened');
 
-function closePopup(popup) {
-  popup.classList.remove('popup_opened');
-}
+const closePopup = popup => popup.classList.remove('popup_opened');
 
-function editFormSubmit(evt) {
+const editFormSubmit = evt => {
   profileName.textContent = popupName.value;
   profileHobby.textContent = popupHobby.value;
   closePopup(editPopup);
   evt.preventDefault();
-}
+};
 
-function addFormSubmit(evt) {
+const addFormSubmit = evt => {
   addCard(elements, createCard(popupPlace.value, popupLink.value));
   closePopup(addPopup);
   evt.preventDefault();
+};
+
+const showInputError = (formElement, inputElement, errorMessage) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.add('popup__field_type_error');
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add('popup__field-error_active');
+};
+
+const hideInputError = (formElement, inputElement) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove('popup__field_type_error');
+  if (errorElement.classList.contains('popup__field-error_active')) {
+    errorElement.classList.remove('popup__field-error_active');
+  }
+  errorElement.textContent = '';
+};
+
+const checkInputValidity = (formElement, inputElement) => {
+  if (!inputElement.validity.valid) {
+    showInputError(formElement, inputElement, inputElement.validationMessage);
+  } else {
+    hideInputError(formElement, inputElement);
+  }
+};
+
+const hasInvalidInput = (inputList) => {
+  return inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+  });
+};
+
+const toggleButtonState = (inputList, buttonElement) => {
+  if (hasInvalidInput(inputList)) {
+    buttonElement.classList.add('popup__button-inactive');
+    buttonElement.disabled = true;
+  }
+  else {
+    buttonElement.classList.remove('popup__button-inactive');
+    buttonElement.disabled = false;
+  }
+};
+
+const setEventListeners = (formElement) => {
+  const inputList = Array.from(formElement.querySelectorAll('.popup__field'));
+  const buttonElement = formElement.querySelector('.popup__button');
+  toggleButtonState(inputList, buttonElement);
+  inputList.forEach((inputElement) => {
+    checkInputValidity(formElement, inputElement);
+    inputElement.addEventListener('input', function () {
+      checkInputValidity(formElement, inputElement);
+      toggleButtonState(inputList, buttonElement);
+    });
+  });
+};
+
+const enableValidation = () => {
+  const formList = Array.from(document.querySelectorAll('.popup__form'));
+  formList.forEach((formElement) => {
+    formElement.addEventListener('submit', function (evt) {
+      evt.preventDefault();
+    });
+    setEventListeners(formElement);
+  });
+};
+
+const editPopupOpen = () => {
+  showPopup(editPopup);
+  fillEditPopup();
+  enableValidation();
 }
 
-editPopupButton.addEventListener('click', function(){showPopup(editPopup)});
-editPopupButton.addEventListener('click', fillEditPopup);
+editPopupButton.addEventListener('click', editPopupOpen);
 closeEditPopupButton.addEventListener('click', function(){closePopup(editPopup)});
 editForm.addEventListener('submit', editFormSubmit);
 

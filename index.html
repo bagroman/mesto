@@ -33,9 +33,11 @@
             <div class="popup edit-popup">
                 <div class="popup__container">
                     <h3 class="popup__header">Редактировать профиль</h3>
-                    <form class="popup__form" name="edit-form" id="edit-popup-form">
-                        <input type="text" class="popup__field" name="name" id="popup-name-field">
-                        <input type="text" class="popup__field" name="hobby" id="popup-hobby-field">
+                    <form class="popup__form" name="edit-form" id="edit-popup-form" novalidate>
+                        <input type="text" class="popup__field" name="name" id="popup-name-field" minlength="2" maxlength="40" required>
+                        <span class="popup__field-error popup-name-field-error"></span>
+                        <input type="text" class="popup__field" name="hobby" id="popup-hobby-field" minlength="2" maxlength="200" required>
+                        <span class="popup__field-error popup-hobby-field-error"></span>
                         <button class="popup__button" type="submit">Сохранить</button>
                     </form>
                     <button class="popup__close-button close-edit" type="button">
