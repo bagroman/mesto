@@ -172,6 +172,13 @@ const addPopupOpen = () => {
   enableValidation();
 }
 
+const closePopupEscKey = evt => {
+  const openPopup = document.querySelector('.popup_opened');
+  if (evt.key === "Escape" && openPopup) {
+    closePopup(openPopup);
+  }
+}
+
 editPopupButton.addEventListener('click', editPopupOpen);
 closeEditPopupButton.addEventListener('click', function(){closePopup(editPopup)});
 editForm.addEventListener('submit', editFormSubmit);
@@ -181,5 +188,12 @@ closeAddPopupButton.addEventListener('click', function(){closePopup(addPopup)});
 addForm.addEventListener('submit', addFormSubmit);
 
 closeZoom.addEventListener('click', function(){closePopup(zoom)});
+
+document.addEventListener('click', function(evt){
+  if (evt.target.classList.contains('popup_opened')) {
+    closePopup(evt.target);
+  }
+});
+document.addEventListener('keydown', closePopupEscKey);
 
 initialCards.forEach(card => {addCard(elements, createCard(card.name, card.link))});
