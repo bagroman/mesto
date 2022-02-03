@@ -60,12 +60,12 @@
                     </button>
                 </div>
             </div>
-            <div class="zoom">
-                <div class="zoom__container">
-                    <img src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg" alt="Иваново" class="zoom__img">
-                    <h3 class="zoom__caption"></h3>
-                    <button class="zoom__close-button close-zoom" type="button">
-                        <img src="images/close.svg" alt="Крестик" class="zoom__close-img">
+            <div class="popup popup_flex zoom-popup">
+                <div class="popup__card-container">
+                    <img src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg" alt="Иваново" class="popup__card-img">
+                    <h3 class="popup__card-caption"></h3>
+                    <button class="popup__close-button close-zoom" type="button">
+                        <img src="images/close.svg" alt="Крестик" class="popup__card-close-img">
                     </button>
                 </div>
             </div>
@@ -84,6 +84,7 @@
             </div>
         </div>
     </template>
+    <script src="./scripts/validate.js"></script>
     <script src="./scripts/script.js"></script>
 </body>
 </html>
