@@ -115,7 +115,7 @@ const editPopupOpen = () => {
 
 const addPopupOpen = () => {
   showPopup(addPopup);
-  fillEditPopup();
+  fillAddPopup();
   enableValidation(formData);
 };
 
