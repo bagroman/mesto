@@ -61,7 +61,7 @@ const createCard = (name, link) => {
   element.querySelector('.element__object-name').textContent = name;
   element.querySelector('.element__like-button').addEventListener('click', evt => {evt.target.classList.toggle('element__like-button_active')});
   element.querySelector('.element__trash-icon').addEventListener('click', evt => {evt.target.parentNode.remove()});
-  elementPhoto.addEventListener('click', fillZoomPopup(name, link));
+  elementPhoto.addEventListener('click', evt => {fillZoomPopup(evt.target.closest('.element').querySelector('.element__object-name').textContent, evt.target.src)});
   elementPhoto.addEventListener('click', function(){showPopup(zoomPopup)});
   return element;
 };
