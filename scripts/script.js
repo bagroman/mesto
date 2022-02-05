@@ -23,6 +23,11 @@ const popupLink = document.querySelector('#popup-link-field');
 const editForm = document.querySelector('#edit-popup-form');
 const addForm = document.querySelector('#add-popup-form');
 
+const inputListForEditForm = Array.from(editForm.querySelectorAll('.popup__field'));
+const buttonElementForEditForm = editForm.querySelector('.popup__button');
+const inputListForAddForm = Array.from(addForm.querySelectorAll('.popup__field'));
+const buttonElementForAddForm = addForm.querySelector('.popup__button');
+
 const elements = document.querySelector('.elements');
 
 const initialCards = [
@@ -107,16 +112,16 @@ const addFormSubmit = evt => {
   evt.preventDefault();
 };
 
-const editPopupOpen = () => {
+const editPopupOpen = (formData) => {
   showPopup(editPopup);
   fillEditPopup();
-  enableValidation(formData);
+  toggleButtonState(formData, inputListForEditForm, buttonElementForEditForm);
 };
 
-const addPopupOpen = () => {
+const addPopupOpen = (formData) => {
   showPopup(addPopup);
   fillAddPopup();
-  enableValidation(formData);
+  toggleButtonState(formData, inputListForAddForm, buttonElementForAddForm);
 };
 
 const closePopupEscKey = evt => {
@@ -126,11 +131,15 @@ const closePopupEscKey = evt => {
   }
 };
 
-editPopupButton.addEventListener('click', editPopupOpen);
+editPopupButton.addEventListener('click', function() {
+  editPopupOpen(formData);
+});
 closeEditPopupButton.addEventListener('click', function(){closePopup(editPopup)});
 editForm.addEventListener('submit', editFormSubmit);
 
-addPopupButton.addEventListener('click', addPopupOpen);
+addPopupButton.addEventListener('click', function() {
+  addPopupOpen(formData);
+});
 closeAddPopupButton.addEventListener('click', function(){closePopup(addPopup)});
 addForm.addEventListener('submit', addFormSubmit);
 
