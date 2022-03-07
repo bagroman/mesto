@@ -1,7 +1,19 @@
+import Card from './Card.js';
+import FormValidator from './FormValidator.js';
+
+const formData = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__field',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button-inactive',
+  inputErrorClass: 'popup__field_type_error',
+  errorClass: 'popup__field-error_active'
+};
+
 const popups = document.querySelectorAll('.popup');
 const editPopup = document.querySelector('.edit-popup');
 const addPopup = document.querySelector('.add-popup');
-const zoomPopup = document.querySelector('.zoom-popup');
+export const zoomPopup = document.querySelector('.zoom-popup');
 
 const editPopupButton = document.querySelector('.profile__edit');
 const addPopupButton = document.querySelector('.profile__add');
@@ -31,47 +43,36 @@ const buttonElementForAddForm = addForm.querySelector('.popup__button');
 const elements = document.querySelector('.elements');
 
 const initialCards = [
-    {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-  ];
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
 
-const createCard = (name, link) => {
-  const elementTemplate = document.querySelector('#element-template').content;
-  const element = elementTemplate.querySelector('.element').cloneNode(true);
-  const elementPhoto = element.querySelector('.element__photo');
-  elementPhoto.src = link;
-  elementPhoto.alt = name;
-  element.querySelector('.element__object-name').textContent = name;
-  element.querySelector('.element__like-button').addEventListener('click', evt => {evt.target.classList.toggle('element__like-button_active')});
-  element.querySelector('.element__trash-icon').addEventListener('click', evt => {evt.target.parentNode.remove()});
-  elementPhoto.addEventListener('click', evt => {fillZoomPopup(evt.target.closest('.element').querySelector('.element__object-name').textContent, evt.target.src)});
-  elementPhoto.addEventListener('click', function(){showPopup(zoomPopup)});
-  return element;
+const addCard = (container, card) => {
+  const cardElement = card.generateCard();
+  container.prepend(cardElement);
 };
-
-const addCard = (container, cardElement) => container.prepend(cardElement);
 
 const fillEditPopup = () => {
   popupName.value = profileName.textContent;
@@ -83,13 +84,13 @@ const fillAddPopup = () => {
   popupLink.value = "";
 };
 
-const fillZoomPopup = (name,link) => {
+export const fillZoomPopup = (name,link) => {
   popupCardImage.src = link;
   popupCardImage.alt = name;
   popupCardCaption.textContent = name;
 };
 
-const showPopup = popup => {
+export const showPopup = popup => {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupEscKey);
 };
@@ -107,7 +108,7 @@ const editFormSubmit = evt => {
 };
 
 const addFormSubmit = evt => {
-  addCard(elements, createCard(popupPlace.value, popupLink.value));
+  addCard(elements, new Card(popupPlace.value, popupLink.value, '#element-template'));
   closePopup(addPopup);
   evt.preventDefault();
 };
@@ -115,13 +116,15 @@ const addFormSubmit = evt => {
 const editPopupOpen = (formData) => {
   showPopup(editPopup);
   fillEditPopup();
-  toggleButtonState(formData, inputListForEditForm, buttonElementForEditForm);
+  const formValidatorEditPopup = new FormValidator(formData, editForm);
+  formValidatorEditPopup.enableValidation();
 };
 
 const addPopupOpen = (formData) => {
   showPopup(addPopup);
   fillAddPopup();
-  toggleButtonState(formData, inputListForAddForm, buttonElementForAddForm);
+  const formValidatorAddPopup = new FormValidator(formData, addForm);
+  formValidatorAddPopup.enableValidation();
 };
 
 const closePopupEscKey = evt => {
@@ -134,16 +137,22 @@ const closePopupEscKey = evt => {
 editPopupButton.addEventListener('click', function() {
   editPopupOpen(formData);
 });
-closeEditPopupButton.addEventListener('click', function(){closePopup(editPopup)});
+closeEditPopupButton.addEventListener('click', function() {
+  closePopup(editPopup);
+});
 editForm.addEventListener('submit', editFormSubmit);
 
 addPopupButton.addEventListener('click', function() {
   addPopupOpen(formData);
 });
-closeAddPopupButton.addEventListener('click', function(){closePopup(addPopup)});
+closeAddPopupButton.addEventListener('click', function() {
+  closePopup(addPopup);
+});
 addForm.addEventListener('submit', addFormSubmit);
 
-closeZoom.addEventListener('click', function(){closePopup(zoomPopup)});
+closeZoom.addEventListener('click', function() {
+  closePopup(zoomPopup);
+});
 
 popups.forEach(function(popup){
   popup.addEventListener('click', function(evt){
@@ -153,4 +162,6 @@ popups.forEach(function(popup){
   });
 });
 
-initialCards.forEach(card => {addCard(elements, createCard(card.name, card.link))});
+initialCards.forEach(item => {
+  addCard(elements, new Card(item.name, item.link, '#element-template'));
+})
