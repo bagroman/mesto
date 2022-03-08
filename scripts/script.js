@@ -126,11 +126,13 @@ const addFormSubmit = evt => {
 const editPopupOpen = (formData) => {
   showPopup(editPopup);
   fillEditPopup();
+  formValidatorEditPopup.resetValidation();
 };
 
 const addPopupOpen = (formData) => {
   showPopup(addPopup);
   fillAddPopup();
+  formValidatorAddPopup.resetValidation();
 };
 
 const closePopupEscKey = evt => {

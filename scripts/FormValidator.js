@@ -7,6 +7,7 @@ export default class FormValidator {
         this._inputErrorClass = formData.inputErrorClass;
         this._errorClass = formData.errorClass;
         this._activeForm = activeForm;
+        this._inputList = Array.from(this._activeForm.querySelectorAll(this._inputSelector));
     }
 
     _showInputError(inputElement, errorMessage) {
@@ -25,6 +26,13 @@ export default class FormValidator {
         errorElement.textContent = '';
     }
 
+    resetValidation() {
+        this._toggleButtonState();
+        this._inputList.forEach(inputElement => {
+            this._hideInputError(inputElement);
+        });
+    }
+
     _checkInputValidity(inputElement) {
         if (!inputElement.validity.valid) {
             this._showInputError(inputElement, inputElement.validationMessage);
@@ -33,15 +41,15 @@ export default class FormValidator {
         }
     }
 
-    _hasInvalidInput(inputList) {
-        return inputList.some((inputElement) => {
+    _hasInvalidInput() {
+        return this._inputList.some((inputElement) => {
             return !inputElement.validity.valid;
         });
     }
 
-    _toggleButtonState(inputList) {
+    _toggleButtonState() {
         const buttonElement = this._activeForm.querySelector(this._submitButtonSelector);
-        if (this._hasInvalidInput(inputList)) {
+        if (this._hasInvalidInput()) {
             buttonElement.classList.add(this._inactiveButtonClass);
             buttonElement.disabled = true;
         }
@@ -51,13 +59,12 @@ export default class FormValidator {
         }
     }
 
-    _setEventListeners(formElement) {
-        const inputList = Array.from(formElement.querySelectorAll(this._inputSelector));
-        this._toggleButtonState(inputList);
-        inputList.forEach((inputElement) => {
+    _setEventListeners() {
+        this._toggleButtonState();
+        this._inputList.forEach((inputElement) => {
             inputElement.addEventListener('input', () => {
                 this._checkInputValidity(inputElement);
-                this._toggleButtonState(inputList);
+                this._toggleButtonState();
             });
         });
     }
