@@ -40,6 +40,11 @@ const buttonElementForEditForm = editForm.querySelector('.popup__button');
 const inputListForAddForm = Array.from(addForm.querySelectorAll('.popup__field'));
 const buttonElementForAddForm = addForm.querySelector('.popup__button');
 
+const formValidatorEditPopup = new FormValidator(formData, editForm);
+formValidatorEditPopup.enableValidation();
+const formValidatorAddPopup = new FormValidator(formData, addForm);
+formValidatorAddPopup.enableValidation();
+
 const elements = document.querySelector('.elements');
 
 const initialCards = [
@@ -69,9 +74,14 @@ const initialCards = [
   }
 ];
 
-const addCard = (container, card) => {
+const createCard = (name, link, template) => {
+  const card = new Card(name, link, template);
   const cardElement = card.generateCard();
-  container.prepend(cardElement);
+  return cardElement;
+};
+
+const addCard = (container, card) => {
+  container.prepend(card);
 };
 
 const fillEditPopup = () => {
@@ -108,7 +118,7 @@ const editFormSubmit = evt => {
 };
 
 const addFormSubmit = evt => {
-  addCard(elements, new Card(popupPlace.value, popupLink.value, '#element-template'));
+  addCard(elements, createCard(popupPlace.value, popupLink.value, '#element-template'));
   closePopup(addPopup);
   evt.preventDefault();
 };
@@ -116,15 +126,11 @@ const addFormSubmit = evt => {
 const editPopupOpen = (formData) => {
   showPopup(editPopup);
   fillEditPopup();
-  const formValidatorEditPopup = new FormValidator(formData, editForm);
-  formValidatorEditPopup.enableValidation();
 };
 
 const addPopupOpen = (formData) => {
   showPopup(addPopup);
   fillAddPopup();
-  const formValidatorAddPopup = new FormValidator(formData, addForm);
-  formValidatorAddPopup.enableValidation();
 };
 
 const closePopupEscKey = evt => {
@@ -163,5 +169,5 @@ popups.forEach(function(popup){
 });
 
 initialCards.forEach(item => {
-  addCard(elements, new Card(item.name, item.link, '#element-template'));
+  addCard(elements, createCard(item.name, item.link, "#element-template"));
 })
