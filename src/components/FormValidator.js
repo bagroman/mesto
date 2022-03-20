@@ -8,6 +8,7 @@ export default class FormValidator {
         this._errorClass = formData.errorClass;
         this._activeForm = activeForm;
         this._inputList = Array.from(this._activeForm.querySelectorAll(this._inputSelector));
+        this._buttonElement = this._activeForm.querySelector(this._submitButtonSelector);
     }
 
     _showInputError(inputElement, errorMessage) {
@@ -48,14 +49,13 @@ export default class FormValidator {
     }
 
     _toggleButtonState() {
-        const buttonElement = this._activeForm.querySelector(this._submitButtonSelector);
         if (this._hasInvalidInput()) {
-            buttonElement.classList.add(this._inactiveButtonClass);
-            buttonElement.disabled = true;
+            this._buttonElement.classList.add(this._inactiveButtonClass);
+            this._buttonElement.disabled = true;
         }
         else {
-            buttonElement.classList.remove(this._inactiveButtonClass);
-            buttonElement.disabled = false;
+            this._buttonElement.classList.remove(this._inactiveButtonClass);
+            this._buttonElement.disabled = false;
         }
     }
 

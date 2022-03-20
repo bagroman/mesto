@@ -25,12 +25,21 @@ export default class Card {
         return this._element;
     }
 
+    _likeToggle() {
+        this._element.querySelector('.element__like-button').classList.toggle('element__like-button_active');
+    }
+
+    _removeItem() {
+        this._element.querySelector('.element__trash-icon').parentNode.remove();
+        this._element = null;
+    }
+
     _setEventListeners() {
-        this._element.querySelector('.element__like-button').addEventListener('click', evt => {
-            evt.target.classList.toggle('element__like-button_active');
+        this._element.querySelector('.element__like-button').addEventListener('click', () => {
+            this._likeToggle();
         });
-        this._element.querySelector('.element__trash-icon').addEventListener('click', evt => {
-            evt.target.parentNode.remove();
+        this._element.querySelector('.element__trash-icon').addEventListener('click', () => {
+            this._removeItem();
         });
         this._elementPhoto.addEventListener('click', () => {
             this._handleCardClick(this._name, this._link);

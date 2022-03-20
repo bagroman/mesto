@@ -1,4 +1,4 @@
-export {formData, initialCards, editPopup, editPopupButton, addPopupButton, editForm, addForm};
+export {formData, initialCards, editPopup, editPopupButton, addPopupButton, editForm, addForm, editPopupInputs};
 
 const formData = {
     formSelector: '.popup__form',
@@ -37,6 +37,7 @@ const initialCards = [
 ];
 
 const editPopup = document.querySelector('.edit-popup');
+const editPopupInputs = editPopup.querySelectorAll('.popup__field');
 
 const editPopupButton = document.querySelector('.profile__edit');
 const addPopupButton = document.querySelector('.profile__add');

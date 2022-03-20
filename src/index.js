@@ -1,4 +1,4 @@
-import { formData, initialCards, editPopup, editPopupButton, addPopupButton, editForm, addForm } from './utils/constants.js';
+import { formData, initialCards, editPopup, editPopupButton, addPopupButton, editForm, addForm, editPopupInputs } from './utils/constants.js';
 import Card from './components/Card.js';
 import FormValidator from './components/FormValidator.js';
 import Section from './components/Section.js';
@@ -33,12 +33,12 @@ const addFormSubmit = cardData => {
 };
 
 editPopupButton.addEventListener('click', function() {
-  popupWithFormEdit.open();
   const userData = userInfo.getUserInfo();
-  editPopup.querySelectorAll('.popup__field').forEach(input => {
+  editPopupInputs.forEach(input => {
     input.value = userData[input.name];
   });
   formValidatorEditPopup.resetValidation();
+  popupWithFormEdit.open();
 });
 
 addPopupButton.addEventListener('click', function() {
