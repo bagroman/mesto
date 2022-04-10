@@ -11,6 +11,7 @@ export default class FormValidator {
         this._buttonElement = this._activeForm.querySelector(this._submitButtonSelector);
     }
 
+    //отображение ошибки у инпута
     _showInputError(inputElement, errorMessage) {
         const errorElement = this._activeForm.querySelector(`.${inputElement.id}-error`);
         inputElement.classList.add(this._inputErrorClass);
@@ -18,6 +19,7 @@ export default class FormValidator {
         errorElement.classList.add(this._errorClass);
     }
 
+    //скрытие ошибки у инпута
     _hideInputError(inputElement) {
         const errorElement = this._activeForm.querySelector(`.${inputElement.id}-error`);
         inputElement.classList.remove(this._inputErrorClass);
@@ -27,6 +29,7 @@ export default class FormValidator {
         errorElement.textContent = '';
     }
 
+    //сброс ошибок у всех инпутов
     resetValidation() {
         this._toggleButtonState();
         this._inputList.forEach(inputElement => {
@@ -34,6 +37,7 @@ export default class FormValidator {
         });
     }
 
+    //проверка введенного в инпут значения
     _checkInputValidity(inputElement) {
         if (!inputElement.validity.valid) {
             this._showInputError(inputElement, inputElement.validationMessage);
@@ -42,12 +46,14 @@ export default class FormValidator {
         }
     }
 
+    //проверка на наличие хотя бы одного невалидного инпута
     _hasInvalidInput() {
         return this._inputList.some((inputElement) => {
             return !inputElement.validity.valid;
         });
     }
 
+    //установка корректного состояния кнопки
     _toggleButtonState() {
         if (this._hasInvalidInput()) {
             this._buttonElement.classList.add(this._inactiveButtonClass);
@@ -59,6 +65,7 @@ export default class FormValidator {
         }
     }
 
+    //установка слушателей
     _setEventListeners() {
         this._toggleButtonState();
         this._inputList.forEach((inputElement) => {
@@ -69,6 +76,7 @@ export default class FormValidator {
         });
     }
 
+    //включение валидации для всех форм
     enableValidation() {
         this._activeForm.addEventListener('submit', evt => {
             evt.preventDefault();

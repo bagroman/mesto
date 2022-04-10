@@ -5,22 +5,26 @@ export default class Popup {
         this._popupCloseButton = this._popup.querySelector('.popup__close-button');
     }
 
+    //открытие попапа
     open() {
         this._popup.classList.add('popup_opened');
         document.addEventListener('keydown', this._handleEscClose);
     }
 
+    //закрытие попапа
     close() {
         this._popup.classList.remove('popup_opened');
         document.removeEventListener('keydown', this._handleEscClose);
     }
 
+    //закрытие попапа по нажатию ESC
     _handleEscClose(evt) {
         if (evt.key === "Escape") {
             this.close();
         }
     }
 
+    //установка слушателей на форму
     setEventListeners() {
         this._popup.addEventListener('click', evt => {
             if (evt.target.classList.contains('popup_opened')) {

@@ -1,19 +1,23 @@
 export default class UserInfo {
-    constructor({ nameSelector, hobbySelector }) {
+    constructor({ nameSelector, aboutSelector, avatarSelector }) {
         this._name = document.querySelector(nameSelector);
-        this._hobby = document.querySelector(hobbySelector);
+        this._about = document.querySelector(aboutSelector);
+        this._avatar = document.querySelector(avatarSelector);
     }
 
+    //получение данных о юзере
     getUserInfo() {
         this._userInfo = {
             name: this._name.textContent,
-            hobby: this._hobby.textContent  
+            about: this._about.textContent  
         };
         return this._userInfo;
     }
 
-    setUserInfo({ name, hobby }) {
+    //установка новых значений о юзере
+    setUserInfo({ name, about, avatar }) {
         this._name.textContent = name;
-        this._hobby.textContent = hobby;
+        this._about.textContent = about;
+        this._avatar.src = avatar;
     }
 }

@@ -7,6 +7,7 @@ export default class PopupWithImage extends Popup {
         this._popupLink = this._popup.querySelector('.popup__card-img');
     }
 
+    //открытие изображения
     open(placeName, link) {
         this._popupLink.src = link;
         this._popupLink.alt = placeName;

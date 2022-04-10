@@ -13,15 +13,18 @@
         <main class="content">
             <section class="profile">
                 <div class="profile__info">
-                    <img src="<%=require('./images/avatar.png')%>" alt="Аватар" class="profile__avatar">
+                    <div class="profile__avatar-container">
+                        <img src="<%=require('./images/avatar.png')%>" alt="Аватар" class="profile__avatar">
+                        <button type="button" class="profile__avatar-change-btn"></button>
+                    </div>
                     <div class="profile__name">
                         <div class="profile__edit-info">
-                            <h1 class="profile__user-name">Жак-Ив Кусто</h1>
+                            <h1 class="profile__user-name"></h1>
                             <button class="profile__edit" type="button">
                                 <img src="<%=require('./images/edit.svg')%>" alt="Кнопка редактировать" class="profile__edit-icon">
                             </button>
                         </div>
-                        <h2 class="profile__hobby">Исследователь океана</h2>
+                        <h2 class="profile__about"></h2>
                     </div>
                 </div>
                 <button class="profile__add" type="button">
@@ -35,11 +38,11 @@
                     <form class="popup__form" name="edit-form" id="edit-popup-form" novalidate>
                         <input type="text" class="popup__field" name="name" id="popup-name-field" minlength="2" maxlength="40" required>
                         <span class="popup__field-error popup-name-field-error"></span>
-                        <input type="text" class="popup__field" name="hobby" id="popup-hobby-field" minlength="2" maxlength="200" required>
-                        <span class="popup__field-error popup-hobby-field-error"></span>
+                        <input type="text" class="popup__field" name="about" id="popup-about-field" minlength="2" maxlength="200" required>
+                        <span class="popup__field-error popup-about-field-error"></span>
                         <button class="popup__button" type="submit">Сохранить</button>
                     </form>
-                    <button class="popup__close-button close-edit" type="button">
+                    <button class="popup__close-button" type="button">
                         <img src="<%=require('./images/close.svg')%>" alt="Крестик" class="popup__close-img">
                     </button>
                 </div>
@@ -54,7 +57,7 @@
                         <span class="popup__field-error popup-link-field-error"></span>
                         <button class="popup__button" type="submit">Сохранить</button>
                     </form>
-                    <button class="popup__close-button close-add" type="button">
+                    <button class="popup__close-button" type="button">
                         <img src="<%=require('./images/close.svg')%>" alt="Крестик" class="popup__close-img">
                     </button>
                 </div>
@@ -63,8 +66,32 @@
                 <div class="popup__card-container">
                     <img src="https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg" alt="Иваново" class="popup__card-img">
                     <h3 class="popup__card-caption"></h3>
-                    <button class="popup__close-button close-zoom" type="button">
+                    <button class="popup__close-button" type="button">
                         <img src="<%=require('./images/close.svg')%>" alt="Крестик" class="popup__card-close-img">
+                    </button>
+                </div>
+            </div>
+            <div class="popup delete-confirm-popup">
+                <div class="popup__container">
+                    <h3 class="popup__header">Вы уверены?</h3>
+                    <form class="popup__form" name="delete-confirm-form" id="delete-confirm-popup-form" novalidate>
+                        <button class="popup__button" type="submit">Да</button>
+                    </form>
+                    <button class="popup__close-button" type="button">
+                        <img src="<%=require('./images/close.svg')%>" alt="Крестик" class="popup__close-img">
+                    </button>
+                </div>
+            </div>
+            <div class="popup change-avatar-popup">
+                <div class="popup__container">
+                    <h3 class="popup__header">Обновить аватар</h3>
+                    <form class="popup__form" name="change-avatar-form" id="change-avatar-popup-form" novalidate>
+                        <input type="url" class="popup__field" name="src" id="popup-src-field" placeholder="Ссылка на аватар" required>
+                        <span class="popup__src-error popup-src-field-error"></span>
+                        <button class="popup__button" type="submit">Сохранить</button>
+                    </form>
+                    <button class="popup__close-button" type="button">
+                        <img src="<%=require('./images/close.svg')%>" alt="Крестик" class="popup__close-img">
                     </button>
                 </div>
             </div>
@@ -79,7 +106,10 @@
             <img src="<%=require('./images/trash.svg')%>" alt="Корзина" class="element__trash-icon">
             <div class="element__info">
                 <h3 class="element__object-name"></h3>
-                <button class="element__like-button" type="button"></button>
+                <div class="element__like-container">
+                    <button class="element__like-button" type="button"></button>
+                    <span class="element__like-button-count"></span>
+                </div>
             </div>
         </div>
     </template>
