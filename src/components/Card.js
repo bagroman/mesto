@@ -26,6 +26,8 @@ export default class Card {
     generateCard() {
         this._element = this._getTemplate();
         this._elementPhoto = this._element.querySelector('.element__photo');
+        this._countLikeElement = this._element.querySelector('.element__like-button-count');
+        this._likeButton = this._element.querySelector('.element__like-button');
         this._elementPhoto.src = this._link;
         this._elementPhoto.alt = this._name;
         this._element.querySelector('.element__object-name').textContent = this._name;
@@ -39,7 +41,7 @@ export default class Card {
 
     //удаление карточки из DOM
     removeItem() {
-        this._element.querySelector('.element__trash-icon').parentNode.remove();
+        this._element.remove();
         this._element = null;
     }
 
@@ -51,20 +53,19 @@ export default class Card {
     
     //простановка лайков на карточку
     setLikes(newLikes) {
-        this._likes = newLikes;
-        const countLikeElement = this._element.querySelector('.element__like-button-count');
-        countLikeElement.textContent = this._likes.length;
+        this._likes = newLikes;      
+        this._countLikeElement.textContent = this._likes.length;
         if (this.isLiked()) {
-            this._element.querySelector('.element__like-button').classList.add('element__like-button_active');
+            this._likeButton.classList.add('element__like-button_active');
         }
         else {
-            this._element.querySelector('.element__like-button').classList.remove('element__like-button_active');
+            this._likeButton.classList.remove('element__like-button_active');
         }
     }
 
     //установка слушателей на карточку
     _setEventListeners() {
-        this._element.querySelector('.element__like-button').addEventListener('click', () => {
+        this._likeButton.addEventListener('click', () => {
             this._handleLikeClick(this._id, this);
         });
         this._element.querySelector('.element__trash-icon').addEventListener('click', () => {

@@ -4,18 +4,28 @@ class Api {
       this._baseUrl = baseUrl;
     }
 
+    //проверка ответа
+    _checkResponse(res) {
+        if (res.ok) {
+            return res.json();
+        }
+        else {
+            return Promise.reject(`Ошибка: ${res.status}`);
+        }
+    }
+
     //получение данных профиля
     getProfile() {
         return fetch(`${this._baseUrl}/users/me`, {
             headers: this._headers
-        }).then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+        }).then(this._checkResponse)
     }
 
     //получение данных о карточках
     getInitialCards() {
         return fetch(`${this._baseUrl}/cards`, {
             headers: this._headers
-        }).then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+        }).then(this._checkResponse)
     }
   
     //редактирование профиля
@@ -27,7 +37,7 @@ class Api {
                 name,
                 about
             })
-        }).then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+        }).then(this._checkResponse)
     }
 
     //добавление карточки
@@ -39,7 +49,7 @@ class Api {
                 name,
                 link
             })
-        }).then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+        }).then(this._checkResponse)
     }
 
     //удаление карточки
@@ -47,7 +57,7 @@ class Api {
         return fetch(`${this._baseUrl}/cards/${id}`, {
             method: "DELETE",
             headers: this._headers
-        }).then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+        }).then(this._checkResponse)
     }
 
     //удаление лайка
@@ -55,7 +65,7 @@ class Api {
         return fetch(`${this._baseUrl}/cards/${id}/likes`, {
             method: "DELETE",
             headers: this._headers
-        }).then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+        }).then(this._checkResponse)
     }
 
     //добавление лайка
@@ -63,7 +73,7 @@ class Api {
         return fetch(`${this._baseUrl}/cards/${id}/likes`, {
             method: "PUT",
             headers: this._headers
-        }).then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+        }).then(this._checkResponse)
     }
 
     //смена аватара
@@ -74,7 +84,7 @@ class Api {
             body: JSON.stringify({
                 avatar: src
             })
-        }).then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+        }).then(this._checkResponse)
     }
   }
   

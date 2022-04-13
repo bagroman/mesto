@@ -1,35 +1,29 @@
-import { formData, editPopupButton, addPopupButton, editForm, changeAvatarForm, addForm, editPopupInputs, changeAvatarButton } from './utils/constants.js';
-import Card from './components/Card.js';
-import FormValidator from './components/FormValidator.js';
-import Section from './components/Section.js';
-import PopupWithImage from './components/PopupWithImage.js'
-import PopupWithForm from './components/PopupWithForm.js'
-import PopupWithConfirmation from './components/PopupWithConfirmation.js'
-import UserInfo from './components/UserInfo.js';
-import './pages/index.css';
-import { api } from './components/Api.js'
+import { formData, editPopupButton, addPopupButton, editForm, changeAvatarForm, addForm, editPopupInputs, changeAvatarButton } from '../utils/constants.js';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import Section from '../components/Section.js';
+import PopupWithImage from '../components/PopupWithImage.js'
+import PopupWithForm from '../components/PopupWithForm.js'
+import PopupWithConfirmation from '../components/PopupWithConfirmation.js'
+import UserInfo from '../components/UserInfo.js';
+import './index.css';
+import { api } from '../components/Api.js'
 
 //id пользователя, выполнившего действие
 let userId;
 
 //получение данных профиля
-api.getProfile()
-  .then(res => {
-    userInfo.setUserInfo(res);
-    userId = res._id;
+Promise.all([api.getProfile(), api.getInitialCards()])
+  .then(([userData, cardList]) => {
+    userInfo.setUserInfo(userData);
+    userId = userData._id;
+    cardList.forEach(data => {
+      cards.addItem(createCard(data, '#element-template', userId))
+    })
   })
   .catch((err) => {
     console.log(err);
-  })
-
-//получение данных о карточках
-api.getInitialCards()
-  .then(cardList => cardList.forEach(data => {
-    cards.addItem(createCard(data, '#element-template', userId))
-  }))
-  .catch((err) => {
-    console.log(err);
-  })
+  });
 
 //установка валидации попапов
 const formValidatorEditPopup = new FormValidator(formData, editForm);
@@ -162,7 +156,7 @@ addPopupButton.addEventListener('click', function() {
 
 changeAvatarButton.addEventListener('click', function() {
   popupWithFormChangeAvatar.open();
-  formValidatorAddPopup.resetValidation();
+  formValidationChangeAvatarPopup.resetValidation();
 });
 
 //создание экзепляров классов Section, PopupWithImage, PopupWithForm, UserInfo
